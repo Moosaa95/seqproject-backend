@@ -388,6 +388,6 @@ AUTH_COOKIE_REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7  # 7 days for refresh token
 
 # Common Cookie Settings
 AUTH_COOKIE_PATH = "/"  # Available across the entire domain
-AUTH_COOKIE_SECURE = False  # Set to True in production (requires HTTPS)
+AUTH_COOKIE_SECURE = config("AUTH_COOKIE_SECURE", default=not DEBUG, cast=bool)
 AUTH_COOKIE_HTTP_ONLY = True  # Prevents JavaScript access (helps mitigate XSS)
 AUTH_COOKIE_SAMESITE = config("AUTH_COOKIE_SAMESITE", default="Lax")
