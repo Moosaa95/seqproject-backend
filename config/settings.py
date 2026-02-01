@@ -252,7 +252,7 @@ SIMPLE_JWT = {
     "AUTH_COOKIE_SECURE": not DEBUG,
     "AUTH_COOKIE_HTTP_ONLY": True,
     "AUTH_COOKIE_PATH": "/",
-    "AUTH_COOKIE_SAMESITE": "Lax",
+    "AUTH_COOKIE_SAMESITE": config("AUTH_COOKIE_SAMESITE", default="Lax"),
 }
 
 # ==============================================================================
@@ -298,12 +298,13 @@ CORS_ALLOW_HEADERS = [
 SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=False, cast=bool)
 SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=False, cast=bool)
 CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", default=False, cast=bool)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Session and CSRF Cookie Settings
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = "Lax"  # or 'None' if cross-domain with SECURE=True
+SESSION_COOKIE_SAMESITE = config("SESSION_COOKIE_SAMESITE", default="Lax")
 CSRF_COOKIE_HTTPONLY = False  # Must be False for JS to read it
-CSRF_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = config("CSRF_COOKIE_SAMESITE", default="Lax")
 CSRF_TRUSTED_ORIGINS = config(
     "CSRF_TRUSTED_ORIGINS",
     default="http://localhost:3000,http://localhost:5173,http://localhost:3001",
@@ -389,4 +390,4 @@ AUTH_COOKIE_REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7  # 7 days for refresh token
 AUTH_COOKIE_PATH = "/"  # Available across the entire domain
 AUTH_COOKIE_SECURE = False  # Set to True in production (requires HTTPS)
 AUTH_COOKIE_HTTP_ONLY = True  # Prevents JavaScript access (helps mitigate XSS)
-AUTH_COOKIE_SAMESITE = "Lax"  # "Lax" allows safe cross-site use, "Strict" prevents CSRF risks
+AUTH_COOKIE_SAMESITE = config("AUTH_COOKIE_SAMESITE", default="Lax")
